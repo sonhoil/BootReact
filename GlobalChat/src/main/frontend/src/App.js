@@ -3,6 +3,7 @@ import axios from 'axios';
 
 function App() {
    const [hello, setHello] = useState('')
+   const [message, setMessage] = useState('')
 
     useEffect(() => {
         axios.get('/api/hello')
@@ -10,9 +11,26 @@ function App() {
         .catch(error => console.log(error))
     }, []);
 
+  function translate(){
+    axios.post('/api/translate',{
+      message: message
+    })
+    .then(response => {
+      setHello(response.data.message.result.translatedText)
+    })
+    .catch(error => console.log(error))
+
+  }
+
     return (
         <div>
-            백엔드에서 가져온 데이터입니다 : {hello}
+           
+            <br></br>
+            <textarea  value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
+            <br></br>
+            <button type="button" onClick={() => translate()} >send</button>
+            <br></br>
+            번역 입니다 : {hello}
         </div>
     );
 }
