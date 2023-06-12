@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.global.chat.api.chatGpt;
 import com.global.chat.api.papago;
 
 @RestController
@@ -21,6 +22,8 @@ public class testController {
     @ResponseBody
     @PostMapping("/api/translate")
     public String translate(@RequestBody Map<String, Object> paramMap) {
-        return papago.translate((String) paramMap.get("message"));
+    	String gptres = chatGpt.generateText("i wonder about korea", 1.0f, 1000);
+    	System.out.println(gptres);
+    	return papago.translate((String) paramMap.get("message"));
     }
 }
